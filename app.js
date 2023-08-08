@@ -1,20 +1,22 @@
 require('dotenv').config();
 const express = require('express');
+const helmet = require("helmet");
+const rateLimit = require('express-rate-limit')
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { errors, celebrate, Joi } = require('celebrate');
 const NotFoundError = require('./errors/not-found-err');
 
-const { login, createUser } = require('./controllers/users');
+const { login, logout, createUser } = require('./controllers/users');
 const { auth } = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, BDURL = 'mongodb://127.0.0.1/bitfilmsdb' } = process.env;
 
 const app = express();
 
-mongoose.connect('mongodb://127.0.0.1/bitfilmsdb', {
+mongoose.connect(BDURL, {
   useNewUrlParser: true,
 });
 
@@ -22,11 +24,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
+app.use(helmet());
+
+const limiter = rateLimit({
+	windowMs: 10 * 60 * 1000,
+	max: 50,
+	standardHeaders: true,
+	legacyHeaders: false,
 });
+app.use(limiter);
 
 app.use(requestLogger);
 
@@ -43,6 +49,8 @@ app.post('/signup', celebrate({
     name: Joi.string().required().min(2).max(30),
   }),
 }), createUser);
+
+app.post('/signout', logout);
 
 app.use(auth);
 

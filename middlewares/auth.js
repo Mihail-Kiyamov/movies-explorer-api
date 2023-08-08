@@ -12,7 +12,7 @@ module.exports.auth = (req, res, next) => {
   try {
     payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'movies-explorer');
   } catch (err) {
-    const authError = new AuthError(err.message);
+    const authError = new AuthError('Отсутствует токен');
     next(authError);
   }
 

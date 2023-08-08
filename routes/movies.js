@@ -1,12 +1,13 @@
 const router = require('express').Router();
-const { celebrate, Joi } = require('celebrate');
+const { celebrate, Joi, Segments } = require('celebrate');
 const {
   getAllSavedMovies,
   deleteMovie,
   createMovie,
 } = require('../controllers/movies');
 
-const linkRegex = /https?:\/\/(www\.)?[0-9a-z.\-_~:/?#[\]@!$&'()*+,;=]+\.[0-9a-z.\-_~:/?#[\]@!$&'()*+,;=]+#?$/;
+const linkRegex = /https?:\/\/(www\.)?[0-9a-zA-Z.\-_~:/?#[\]@!$&'()*+,;=]+\.[0-9a-zA-Z.\-_~:/?#[\]@!$&'()*+,;=]+#?$/;
+const idRegex = /^[0-9a-z]{24}$/;
 
 router.get('/', getAllSavedMovies);
 router.post('/', celebrate({
@@ -22,10 +23,12 @@ router.post('/', celebrate({
     nameEN: Joi.string().required(),
     thumbnail: Joi.string().regex(linkRegex).required(),
     movieId: Joi.number().required(),
-    name: Joi.string().required().min(2).max(30),
-    link: Joi.string().regex(linkRegex).required(),
   }),
 }), createMovie);
-router.delete('/:id', deleteMovie);
+router.delete('/:id', celebrate({
+  [Segments.PARAMS]: Joi.object().keys({
+    id: Joi.string().regex(idRegex).length(24).required(),
+  }),
+}), deleteMovie);
 
 module.exports = router;
