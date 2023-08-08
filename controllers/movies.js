@@ -53,14 +53,12 @@ module.exports.deleteMovie = (req, res, next) => {
   Movie.findById(req.params.id)
     .then((movie) => {
       if (!movie) {
-        throw new NotFoundError('Запрашиваемая карточка не найдена');
+        throw new NotFoundError('Запрашиваемый фильм не найдена');
       }
       if (!movie.owner.equals(req.user._id)) {
-        throw new AccessError('Вы не являетесь хозяином карточки');
+        throw new AccessError('Вы не являетесь хозяином фильма');
       }
-    })
-    .then(() => {
-      Movie.findByIdAndRemove(req.params.id)
+      Movie.findOneAndDelete(req.params.id)
         .then((movie) => {
           res.send(movie);
         });
