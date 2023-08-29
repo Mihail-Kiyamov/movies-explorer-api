@@ -18,6 +18,7 @@ const { PORT = 3000, BDURL = 'mongodb://127.0.0.1/bitfilmsdb' } = process.env;
 const app = express();
 
 mongoose.connect(BDURL, {
+  origin: '*',
   useNewUrlParser: true,
 });
 
