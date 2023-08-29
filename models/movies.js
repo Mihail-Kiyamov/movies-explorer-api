@@ -21,11 +21,6 @@ const movieSchema = new mongoose.Schema({
   thumbnail: {
     type: String,
     required: true,
-    validate: {
-      validator: function valid(value) {
-        return validator.isURL(value);
-      },
-    },
   },
   trailerLink: {
     type: String,
@@ -39,11 +34,6 @@ const movieSchema = new mongoose.Schema({
   image: {
     type: String,
     required: true,
-    validate: {
-      validator: function valid(value) {
-        return validator.isURL(value);
-      },
-    },
   },
   description: {
     type: String,
