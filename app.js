@@ -72,6 +72,7 @@ app.use(errorLogger);
 app.use(errors());
 
 app.use((err, req, res, next) => {
+  console.log(err.message);
   const { statusCode = 500 } = err;
   const message = statusCode === 500 ? 'На сервере произошла ошибка' : err.message;
 
