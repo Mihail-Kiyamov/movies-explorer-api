@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const helmet = require("helmet");
+const cors = require('cors');
 const rateLimit = require('express-rate-limit')
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -23,6 +24,10 @@ mongoose.connect(BDURL, {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+app.use(cors({
+  credentials: true,
+}));
 
 app.use(helmet());
 
