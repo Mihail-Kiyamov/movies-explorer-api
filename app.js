@@ -18,7 +18,6 @@ const { PORT = 3000, BDURL = 'mongodb://127.0.0.1/bitfilmsdb' } = process.env;
 const app = express();
 
 mongoose.connect(BDURL, {
-  origin: 'ttp://localhost:3000',
   useNewUrlParser: true,
 });
 
@@ -27,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(cors({
+  origin: 'http://localhost:3000',
   credentials: true,
 }));
 
