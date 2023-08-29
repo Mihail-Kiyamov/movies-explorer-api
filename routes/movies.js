@@ -8,6 +8,7 @@ const {
 
 const linkRegex = /https?:\/\/(www\.)?[0-9a-zA-Z.\-_~:/?#[\]@!$&'()*+,;=]+\.[0-9a-zA-Z.\-_~:/?#[\]@!$&'()*+,;=]+#?$/;
 const idRegex = /^[0-9a-z]{24}$/;
+const imageRegex = /[0-9a-zA-Z.\-_~:/?#[\]@!$&'()*+,;=]+\.[0-9a-zA-Z.\-_~:/?#[\]@!$&'()*+,;=]+#?$/;
 
 router.get('/', getAllSavedMovies);
 router.post('/', celebrate({
@@ -17,11 +18,11 @@ router.post('/', celebrate({
     duration: Joi.number().required(),
     year: Joi.string().required(),
     description: Joi.string().required(),
-    image: Joi.string().regex(linkRegex).required(),
+    image: Joi.string().regex(imageRegex).required(),
     trailerLink: Joi.string().regex(linkRegex).required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
-    thumbnail: Joi.string().regex(linkRegex).required(),
+    thumbnail: Joi.string().regex(imageRegex).required(),
     movieId: Joi.number().required(),
   }),
 }), createMovie);
