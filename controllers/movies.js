@@ -58,7 +58,7 @@ module.exports.deleteMovie = (req, res, next) => {
       if (!movie.owner.equals(req.user._id)) {
         throw new AccessError('Вы не являетесь хозяином фильма');
       }
-      return Movie.findOneAndDelete(req.params.id)
+      Movie.findOneAndDelete(req.params.id)
         .then((movie) => {
           res.send(movie);
         });
