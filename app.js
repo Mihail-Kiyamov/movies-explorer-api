@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const helmet = require("helmet");
 const cors = require('cors');
-const cookieSession = require('cookie-session');
 const rateLimit = require('express-rate-limit');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -26,16 +25,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// app.use(
-//   cookieSession({
-//     sameSite: 'none',
-//   }),
-// );
-
 app.use(cors({
   origin: 'http://localhost:3000',
   credentials: true,
-  sameSite: 'none',
 }));
 
 app.use(helmet());

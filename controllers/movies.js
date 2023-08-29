@@ -50,7 +50,7 @@ module.exports.createMovie = (req, res, next) => {
 };
 
 module.exports.deleteMovie = (req, res, next) => {
-  Movie.findById(req.params.id)
+  Movie.find({ movieId: req.params.id })
     .then((movie) => {
       if (!movie) {
         throw new NotFoundError('Запрашиваемый фильм не найдена');
@@ -58,7 +58,7 @@ module.exports.deleteMovie = (req, res, next) => {
       if (!movie.owner.equals(req.user._id)) {
         throw new AccessError('Вы не являетесь хозяином фильма');
       }
-      Movie.findOneAndDelete(req.params.id)
+      Movie.findOneAndDelete({ movieId: req.params.id })
         .then((movie) => {
           res.send(movie);
         });

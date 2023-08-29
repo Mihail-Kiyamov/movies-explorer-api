@@ -8,6 +8,7 @@ const {
 
 const linkRegex = /https?:\/\/(www\.)?[0-9a-zA-Z.\-_~:/?#[\]@!$&'()*+,;=]+\.[0-9a-zA-Z.\-_~:/?#[\]@!$&'()*+,;=]+#?$/;
 const idRegex = /^[0-9a-z]{24}$/;
+const movieIdRegex = /^[0-9]+$/;
 const imageRegex = /[0-9a-zA-Z.\-_~:/?#[\]@!$&'()*+,;=]+\.[0-9a-zA-Z.\-_~:/?#[\]@!$&'()*+,;=]+#?$/;
 
 router.get('/', getAllSavedMovies);
@@ -28,7 +29,7 @@ router.post('/', celebrate({
 }), createMovie);
 router.delete('/:id', celebrate({
   [Segments.PARAMS]: Joi.object().keys({
-    id: Joi.string().regex(idRegex).length(24).required(),
+    id: Joi.string().regex(movieIdRegex).required(),
   }),
 }), deleteMovie);
 
