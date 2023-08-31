@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(cors({
-  origin: 'http://movie.explorer.nomoredomainsicu.ru,
+  origin: 'https://movie.explorer.nomoredomainsicu.ru,
   credentials: true,
 }));
 
