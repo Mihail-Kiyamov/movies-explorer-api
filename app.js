@@ -21,16 +21,16 @@ mongoose.connect(BDURL, {
   useNewUrlParser: true,
 });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
-
 app.use(cors({
   origin: 'https://movie.explorer.nomoredomainsicu.ru,
   credentials: true,
 }));
 
 app.use(helmet());
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 const limiter = rateLimit({
 	windowMs: 10 * 60 * 1000,
