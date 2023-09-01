@@ -20,7 +20,7 @@ module.exports.login = (req, res, next) => {
 
 module.exports.logout = (req, res) => {
   res.clearCookie('jwt');
-  return res.sendStatus(200);
+  return res.sendStatus(200).send('Вы вышли из аккаунта');
 }
 
 module.exports.getCurrentUser = (req, res, next) => {
