@@ -22,7 +22,7 @@ mongoose.connect(BDURL, {
 });
 
 app.use(cors({
-  origin: 'https://movie.explorer.nomoredomainsicu.ru',
+  origin: ['https://movie.explorer.nomoredomainsicu.ru', 'http://localhost:3000'],
   credentials: true,
 }));
 
