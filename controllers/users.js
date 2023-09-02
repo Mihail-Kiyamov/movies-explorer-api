@@ -19,8 +19,8 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.logout = (req, res) => {
-  res.сookie('jwt', 'none', {
-    maxAge: 5 * 1000,
+  res.cookie('jwt', 'none', {
+    maxAge: 5000,
     httpOnly: true,
     secure: true,
     sameSite: 'none',
