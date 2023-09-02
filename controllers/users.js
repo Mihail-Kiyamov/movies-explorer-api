@@ -19,8 +19,12 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.logout = (req, res) => {
-  res.clearCookie('jwt');
-  res.sendStatus(200).send('Вы вышли из аккаунта');
+  res.сookie('jwt', 'none', {
+    maxAge: 5 * 1000,
+    httpOnly: true,
+    secure: true,
+    sameSite: 'none',
+  }).sendStatus(200).send('Вы вышли из аккаунта');
 }
 
 module.exports.getCurrentUser = (req, res, next) => {
